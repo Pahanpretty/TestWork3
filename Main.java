@@ -20,40 +20,67 @@ public class Main {
         }else{
             throw new Exception("Некорректно введено выражение");
         }
-        if (action == '*' || action == '/') {
-            if (data[1].contains("\"")) throw new Exception("Некорректно введено выражение");
+        String first1 = data[0];
+        String second = data[1];
+        if (first1.length() > 12) {
+            throw new Exception("Некорректно введено выражение");
         }
-        for (int i = 0; i < data.length; i++) {
-            data[i] = data[i].replace("\"", "");
-        }
+        String first2 = first1.replaceFirst("\"", "");
 
+        if (!first2.contains("\"")   )  throw new Exception("Некорректно введено выражение");
+        String first3 = first2.replaceFirst("\"", "");
+        if (action == '*' || action == '/') {
+            if (second.contains("\"")) throw new Exception("Некорректно введено выражение");
+
+            if (action == '*' || action == '/') {
+                if ((Integer.parseInt(second) < 1) || ((Integer.parseInt(second)) > 10))
+                {
+                    throw new Exception("Некорректно введено выражение");
+            } }
+            }
+
+        if (action == '+' || action == '-') {
+             second = second.replaceFirst("\"", "");
+
+        }
+        if (action == '+' || action == '-') {
+             second = second.replaceFirst("\"", "");
+        }
         if (action == '+') {
-            printInQuotes(data[0] + data[1]);
+            printInQuotes(first3 + second);
         } else if (action == '*') {
-            int multiplier = Integer.parseInt(data[1]);
+            int number = Integer.parseInt(second);
             String result = "";
-            for (int i = 0; i < multiplier; i++) {
-                result+=data[0];
+            for (int i = 0; i < number; i++) {
+                result+=first3;
             }
             printInQuotes(result);
         } else if (action == '-') {
-            int index = data[0].indexOf(data[1]);
+            int index = first3.indexOf(second);
             if(index == -1){
-                printInQuotes(data[0]);
+                printInQuotes(first3);
             }else{
-                String result = data[0].substring(0, index);
-                result+=data[0].substring(index+data[1].length());
+                String result = first3.substring(0, index);
+                result+=first3.substring(index+second.length());
                 printInQuotes(result);
             }
         }else{
-            int newLen = data[0].length()/Integer.parseInt(data[1]);
-            String result = data[0].substring(0,newLen);
+            int newLen = first3.length()/Integer.parseInt(second);
+            String result = first3.substring(0,newLen);
             printInQuotes(result);
         }
 
 
     }
-    static void printInQuotes(String text){
-        System.out.println("\""+text+"\"");
+
+    static void printInQuotes(String text) {
+
+        if (text.length() > 40) {
+            String text1 = text.substring(0, 40);
+            System.out.print(text1);
+            System.out.print("...");
+        } else {
+            System.out.println(text);
+        }
     }
 }
